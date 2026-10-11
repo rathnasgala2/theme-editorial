@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - LICENSE
+      - README.md
+      - components.css
+      - print.css
+      - theme.json
+      - tokens.css
+      - package.json
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Validate and package the declared version
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      WORKSPACE_ROOT: ${{ github.workspace }}
+      GALA_THEME_TOOLING_DIR: ${{ github.workspace }}/theme-tooling
+    steps:
+      - name: Check out the complete history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # See ci.yml for why this is a pinned sibling checkout rather than an
+      # npm dependency (THD-M6; not yet published, owner decision).
+      - name: Check out the theme-tooling sibling repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: rathnasgala2/theme-tooling
+          ref: 14668c08a032bf7eb88dd74a656ee3d69ff98c9e # 0.5.0
+          path: theme-tooling
+          persist-credentials: false
+
+      - name: Install the pinned Node.js distribution
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: theme-tooling/package-lock.json
+
+      - name: Verify toolchain pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(node --version)" = "v24.18.0"
+          test "$(npm --version)" = "11.16.0"
+
+      - name: Install the shared tooling's dependencies
+        working-directory: theme-tooling
+        run: npm ci
+
+      - name: Run the complete release gate
+        working-directory: tooling
+        run: npm run verify
+
+      # The package artifact must contain exactly the reviewed commit's bytes.
+      - name: Fail if verify mutated the working tree
+        run: git diff --exit-code
+
+      # THD-M6: the theme's SBOM is not committed (it depends on nothing
+      # but this commit's own package.json identity, so committing it
+      # would only be another copy of information already in git) —
+      # generated fresh here and attached to this release as a build
+      # artifact instead.
+      - name: Generate the release SBOM
+        working-directory: tooling
+        run: npm run sbom:generate -- --out "${{ github.workspace }}/dist/sbom.cdx.json"
+
+      - name: Upload the release SBOM
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sbom.cdx.json
+          path: dist/sbom.cdx.json
+          retention-days: 90
+
+      - name: Build the package artifact
+        run: npm pack --pack-destination dist
+
+      - name: Upload the package artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: theme-package-${{ github.sha }}
+          path: dist/*.tgz
+          if-no-files-found: error
+          retention-days: 90

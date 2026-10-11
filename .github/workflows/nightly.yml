@@ -1,0 +1,80 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "10 3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  quality:
+    name: Quality and supply chain
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      WORKSPACE_ROOT: ${{ github.workspace }}
+      GALA_THEME_TOOLING_DIR: ${{ github.workspace }}/theme-tooling
+    steps:
+      - name: Check out the complete history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # See ci.yml for why this is a pinned sibling checkout rather than an
+      # npm dependency (THD-M6; not yet published, owner decision).
+      - name: Check out the theme-tooling sibling repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: rathnasgala2/theme-tooling
+          ref: 14668c08a032bf7eb88dd74a656ee3d69ff98c9e # 0.5.0
+          path: theme-tooling
+          persist-credentials: false
+
+      - name: Install the pinned Node.js distribution
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: theme-tooling/package-lock.json
+
+      - name: Verify toolchain pins
+        shell: bash
+        run: |
+          test "$(node --version)" = "v24.18.0"
+
+      - name: Install the shared tooling's dependencies
+        working-directory: theme-tooling
+        run: npm ci
+
+      - name: Run repository gates
+        working-directory: tooling
+        run: npm run verify
+
+      - name: Check gitleaks fragment drift (infra sibling optional)
+        working-directory: tooling
+        run: npm run workflows:drift
+
+      - name: Install the checksum-pinned Gitleaks binary
+        shell: bash
+        run: |
+          install -d "${RUNNER_TEMP}/gitleaks"
+          curl --proto '=https' --tlsv1.2 --fail --silent --show-error --location --retry 3 \
+            'https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz' \
+            --output "${RUNNER_TEMP}/gitleaks/gitleaks.tar.gz"
+          cd "${RUNNER_TEMP}/gitleaks"
+          printf '%s  %s\n' \
+            '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb' \
+            'gitleaks.tar.gz' | sha256sum --check --strict
+          tar --extract --gzip --file gitleaks.tar.gz gitleaks
+
+      - name: Scan repository history for secrets
+        run: >-
+          "${RUNNER_TEMP}/gitleaks/gitleaks" git --redact --no-banner
+          --log-opts="--all" .

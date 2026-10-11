@@ -1,0 +1,38 @@
+{
+  "name": "@rathnasgala2/theme-editorial-tooling",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local dev/test/SBOM entry point for @rathnasgala2/theme-editorial. Every gate implementation lives in @rathnasgala2/theme-tooling; this file only dispatches into it and is never packed.",
+  "engines": {
+    "node": "24.18.0",
+    "npm": "11.16.0"
+  },
+  "scripts": {
+    "format": "node run.mjs format",
+    "format:check": "node run.mjs format:check",
+    "lint": "node run.mjs lint",
+    "schema:check": "node run.mjs schema:check",
+    "package-identity:check": "node run.mjs package-identity:check",
+    "css:check": "node run.mjs css:check",
+    "grammar:check": "node run.mjs grammar:check",
+    "contrast:check": "node run.mjs contrast:check",
+    "tokens:check": "node run.mjs tokens:check",
+    "tokens:generate": "node run.mjs tokens:generate",
+    "budgets:check": "node run.mjs budgets:check",
+    "package:check": "node run.mjs package:check",
+    "absence:check": "node run.mjs absence:check",
+    "schema-pin:check": "node run.mjs schema-pin:check",
+    "digest:generate": "node run.mjs digest:generate",
+    "digest:check": "node run.mjs digest:check",
+    "test": "node run.mjs test",
+    "duplication": "node run.mjs duplication",
+    "sbom:generate": "node run.mjs sbom:generate",
+    "sbom:check": "node run.mjs sbom:check",
+    "audit": "node run.mjs audit",
+    "workflows:check": "node run.mjs workflows:check",
+    "workflows:drift": "node run.mjs workflows:drift",
+    "verify": "node run.mjs verify",
+    "visual:check": "node run.mjs visual:check"
+  }
+}
