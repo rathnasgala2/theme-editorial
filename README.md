@@ -1,7 +1,7 @@
 # @rathnasgala2/theme-editorial
 
 The Editorial presentation theme for Galascribe portable publications using
-`@rathnasgala2/template@^4.0.0`. It pairs warm paper and near-black ink with a
+`@rathnasgala2/template@^4.1.0`. It pairs warm paper and near-black ink with a
 restrained oxblood accent, an editorial serif reading face, and neutral sans
 interface typography.
 
