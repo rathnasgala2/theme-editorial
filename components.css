@@ -49,7 +49,11 @@
     background: var(--gala-color-code-canvas);
   }
 
-  [data-gala-publication-root] .g-article-head,
+  [data-gala-publication-root] .g-article-head {
+    border-bottom: var(--gala-border-row-divider);
+    padding-top: 0;
+  }
+
   [data-gala-publication-root] .g-author-card {
     border-bottom: var(--gala-border-row-divider);
     padding: 0 0 var(--gala-space-6);
