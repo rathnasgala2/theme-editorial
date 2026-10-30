@@ -56,7 +56,7 @@
 
   [data-gala-publication-root] .g-author-card {
     border-bottom: var(--gala-border-row-divider);
-    padding: 0 0 var(--gala-space-6);
+    padding: var(--gala-space-4) var(--gala-space-6) var(--gala-space-6);
   }
 
   [data-gala-publication-root] blockquote {

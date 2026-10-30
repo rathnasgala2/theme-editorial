@@ -2,7 +2,7 @@
   "schemaId": "urn:gala:schema:theme-contract:2.0.0",
   "schemaVersion": "2.0.0",
   "themeId": "editorial",
-  "package": "@rathnasgala2/theme-editorial@4.2.0",
+  "package": "@rathnasgala2/theme-editorial@4.2.1",
   "contractVersion": "4.1.0",
   "templateRange": "^4.4.0",
   "stylesheets": ["tokens.css", "components.css", "print.css"],
@@ -83,8 +83,8 @@
     {
       "key": "card-pad",
       "type": "box",
-      "light": "1rem 0 1.25rem",
-      "dark": "1rem 0 1.25rem"
+      "light": "1rem 1.25rem 1.25rem",
+      "dark": "1rem 1.25rem 1.25rem"
     },
     {
       "key": "card-title-size",
@@ -706,15 +706,15 @@
     {
       "path": "tokens.css",
       "mediaType": "text/css",
-      "byteLength": "12745",
-      "sha256": "sha256:eea27e15e38a45ef314871859b2ab9de9c5cb2e3999d0a60add1af4fadf23f5c",
+      "byteLength": "12769",
+      "sha256": "sha256:dbe9c1cdd45f158d6ff39088f5554f531ca13a0d2d5a5980f354fc82ccaeffb1",
       "license": "Apache-2.0"
     },
     {
       "path": "components.css",
       "mediaType": "text/css",
-      "byteLength": "2040",
-      "sha256": "sha256:3fd3d13ceef18460639b1f56b73a6af59f8f490e5c1f03f642340ba844f94c97",
+      "byteLength": "2076",
+      "sha256": "sha256:ccc67622fd168c81dc3c9f88f6d97f4c86ba06b2bbc19633488c18999515337b",
       "license": "Apache-2.0"
     },
     {
@@ -733,14 +733,14 @@
     "fixture-token-catalog-contrast"
   ],
   "browserPolicyRef": "gala-theme-css-v2-20211224",
-  "integrity": "sha256:d9e2a307fabbbc4453d2d5762c5db84422715427e06bad350fd3002f84d47691",
+  "integrity": "sha256:052ce5cbff3ea63bdabc95e5d58e0cba2a88720076ae280379545aa81dee0c55",
   "budgets": {
     "maximumFileBytes": "32768",
     "maximumTotalBytes": "98304",
     "maximumFiles": 8
   },
   "fixtureDigest": "sha256:13ed5fe2ae941d682c86f4a0ca9974b8b38285e8f95db295bb447bf127df95d2",
-  "evidenceDigest": "sha256:1403e6447f618e2ff6be329abc91793ba3f89dbf6dd3146685a029de77b94c65",
+  "evidenceDigest": "sha256:ea86f61dde3028c7ed6f27f2e918c236c2a842c5ecb97561d9bc0240ea9c7bd1",
   "stylingContractDigest": "sha256:4afdcb555d21fc205ab332a9e8996a09e1eb607053353c399eb070d0f0525f29",
   "composition": {
     "schemaId": "urn:gala:schema:template-composition:2.0.0",

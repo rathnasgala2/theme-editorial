@@ -6,7 +6,7 @@
     --gala-border-code: 1px solid #342b26;
     --gala-border-width: 1px;
     --gala-card-inset: 0;
-    --gala-card-pad: 1rem 0 1.25rem;
+    --gala-card-pad: 1rem 1.25rem 1.25rem;
     --gala-card-title-size: 1.35rem;
     --gala-chip-pad: 0.22rem 0.55rem;
     --gala-color-accent-2: #855425;
@@ -90,7 +90,7 @@
       --gala-border-code: 1px solid #4e423b;
       --gala-border-width: 1px;
       --gala-card-inset: 0;
-      --gala-card-pad: 1rem 0 1.25rem;
+      --gala-card-pad: 1rem 1.25rem 1.25rem;
       --gala-card-title-size: 1.35rem;
       --gala-chip-pad: 0.22rem 0.55rem;
       --gala-color-accent-2: #d2a168;
@@ -174,7 +174,7 @@
     --gala-border-code: 1px solid #342b26;
     --gala-border-width: 1px;
     --gala-card-inset: 0;
-    --gala-card-pad: 1rem 0 1.25rem;
+    --gala-card-pad: 1rem 1.25rem 1.25rem;
     --gala-card-title-size: 1.35rem;
     --gala-chip-pad: 0.22rem 0.55rem;
     --gala-color-accent-2: #855425;
@@ -257,7 +257,7 @@
     --gala-border-code: 1px solid #4e423b;
     --gala-border-width: 1px;
     --gala-card-inset: 0;
-    --gala-card-pad: 1rem 0 1.25rem;
+    --gala-card-pad: 1rem 1.25rem 1.25rem;
     --gala-card-title-size: 1.35rem;
     --gala-chip-pad: 0.22rem 0.55rem;
     --gala-color-accent-2: #d2a168;

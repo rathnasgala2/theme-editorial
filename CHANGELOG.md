@@ -4,6 +4,15 @@ All notable changes to `@rathnasgala2/theme-editorial` are documented here.
 
 ## Unreleased
 
+## 4.2.1 - 2026-10-30
+
+- The boxed card keeps its border and shadow, and its body now has side
+  padding (`card-pad` is `1rem 1.25rem 1.25rem`, was `1rem 0 1.25rem`), so
+  grid-card text sits 21px inside the border in both palettes instead of 1px (row cards keep their own 16px body padding). The
+  author card gets the same inset (`1rem 1.5rem 1.5rem`).
+- Gated by theme-tooling's new card inset check (`visual:check`): a painted
+  card keeps its text at least 12px inside its left, right and bottom edges.
+
 ## 4.2.0 - 2026-10-21
 
 - Built against template 4.4.0 and styling contract 4.1.0 (new
